@@ -18,6 +18,8 @@ Boston, MA 02110-1301, USA.
 
 #include <QChildEvent>
 #include <QPainter>
+#include <QApplication>
+#include <QDesktopWidget>
 #include <Plasma/Containment>
 #include "ihtc.h"
 
@@ -29,9 +31,6 @@ static QMap<Containment*,IHTC*>instance;
 
 IHTC::IHTC(QObject *parent, const QVariantList &args) : Applet(parent, args)
 {
-    setAcceptHoverEvents(true);
-    resize(0, 0);
-    hide();
 }
 
 IHTC::~IHTC()
@@ -49,6 +48,11 @@ IHTC::~IHTC()
 void
 IHTC::init()
 {
+    Applet::init();
+    setAcceptHoverEvents(true);
+    setGeometry(QApplication::desktop()->screenGeometry());
+    hide();
+
     Containment *desktop = containment();
     if (!desktop || instance.contains(desktop))
     {
@@ -58,7 +62,6 @@ IHTC::init()
 
     instance.insert(desktop, this);
 
-    Applet::init();
     setAspectRatioMode(IgnoreAspectRatio);
     if ((_cashew = cashew()))
         _cashew->hide();
