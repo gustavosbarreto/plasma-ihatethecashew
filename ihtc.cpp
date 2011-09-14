@@ -119,7 +119,7 @@ IHTC::cashew()
     foreach (QGraphicsItem *kid, desktop->childItems())
     {
         o = dynamic_cast<QObject*>(kid);
-        if (o && o->inherits("Plasma::ToolBox") || o->inherits("Plasma::DesktopToolBox"))
+        if (o && o->inherits("Plasma::ToolBox") || o->inherits("Plasma::DesktopToolBox") || o->inherits("DesktopToolBox"))
             return kid;
     }
     return 0;
